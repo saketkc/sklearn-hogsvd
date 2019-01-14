@@ -5,7 +5,7 @@
 .. |Travis| image:: https://travis-ci.org/saketkc/sklhogsvd.svg?branch=master
 .. _Travis: https://travis-ci.org/saketkc/sklhogsvd
 
-.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/coy2qqaqr1rnnt5y/branch/master?svg=true
+.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/2nddd3o9d70upwxj/branch/master?svg=true
 .. _AppVeyor: https://ci.appveyor.com/project/saketkc/sklhogsvd
 
 .. |Codecov| image:: https://codecov.io/gh/saketkc/sklhogsvd/branch/master/graph/badge.svg
