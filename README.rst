@@ -17,8 +17,8 @@
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/sklearn-hogsvd/badge/?version=latest
 .. _ReadTheDocs: https://sklearn-hogsvd.readthedocs.io/en/latest/?badge=latest
 
-sklhogsvd - A template for scikit-learn contributions
-============================================================
+sklhogsvd - Higher order generalized singular value decomposition 
+=================================================================
 
 .. _scikit-learn: https://scikit-learn.org
 
