@@ -27,7 +27,7 @@ higher order generalized singular value decomposition as described
 in [Ponnapalli2011]_ with an additional support for ensuring
 orthogonality in the "arraylet" space.
 
-.. [Ponnapalli2011] Ponnapalli, S.P., Saunders, M.A., Van Loan, C.F., and Alter, O. (2011). A Higher-Order Generalized Singular Value Decomposition for Comparison of Global mRNA Expression from Multiple Organisms. PLoS ONE 6, e28072.
+.. [Ponnapalli2011] Ponnapalli, S.P., Saunders, M.A., Van Loan, C.F., and Alter, O. (2011). A Higher-Order Generalized Singular Value Decomposition for Comparison of Global mRNA Expression from Multiple Organisms. PLoS ONE 6, e28072. https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0028072
 
 
 .. _documentation: https://sklearn-hogsvd.readthedocs.io/en/latest/quick_start.html
