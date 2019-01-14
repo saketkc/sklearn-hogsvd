@@ -149,5 +149,5 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
             raise ValueError('Shape of input is different from what was seen'
                              'in `fit`')
         transform = self.U_ortho
-        X_transformed = np.dot(X.T, self.U)
+        X_transformed = np.vectorize(lambda x, y: x.T.dot(y), signature='(m,n),(m,n)->(n,n)')(X, self.U)
         return X_transformed
