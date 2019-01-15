@@ -31,16 +31,15 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
     @staticmethod
     def _mat_inner_prod(X):
         """Return matrix inner product that can be applied to 3darray"""
-        return np.vectorize(lambda x: x.T.dot(x), signature='(m,n)->(n,n)')(X)
+        return np.vectorize(lambda x: x.T.dot(x))(X)
 
     @staticmethod
     def _fit_S(X):
-        X = check_array(
-            X, ensure_min_samples=2, allow_nd=True, accept_sparse=True)
-        N = X.shape[0]
+        X = [check_array(x, accept_sparse=True) for x in X]
+        N = len(X)
         data_shape = X[0].shape
-        A = HigherOrderGSVD._mat_inner_prod(X)
-        A_inv = np.linalg.inv(A)
+        A = [x.T.dot(x) for x in X]
+        A_inv = [np.linalg.inv(a) for a in A]
         S = np.zeros((data_shape[1], data_shape[1]))
         for i in range(N):
             for j in range(i + 1, N):
@@ -50,13 +49,9 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
 
     @staticmethod
     def _fit_B(X, V):
-        X = check_array(
-            X, ensure_min_samples=2, allow_nd=True, accept_sparse=True)
+        X = [check_array(x, accept_sparse=True) for x in X]
         V_inv = np.linalg.inv(V)
-        get_b = np.vectorize(
-            lambda vinv, x: np.dot(vinv, x.T).T,
-            signature='(n,n),(m,n)->(m,n)')
-        B = get_b(V_inv, X)
+        B = [np.dot(V_inv, x.T).T for x in X]
         return B
 
     @staticmethod
@@ -71,12 +66,9 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
 
     @staticmethod
     def _fit_U_Sigma(B):
-        B = check_array(
-            B, ensure_min_samples=2, allow_nd=True, accept_sparse=True)
-        get_sigma = np.vectorize(
-            lambda b_i: np.linalg.norm(b_i, axis=0), signature='(m,n)->(n)')
-        sigmas = get_sigma(B)
-        U = np.divide(B, sigmas[:, None, :])
+        B = [check_array(b, accept_sparse=True) for b in B]
+        sigmas = np.array([np.linalg.norm(b, axis=0) for b in B])
+        U = [b / sigma for b, sigma in zip(B, sigmas)]
         return sigmas, U
 
     def fit(self, X, y=None):
@@ -93,8 +85,7 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
         self : object
             Returns self.
         """
-        X = check_array(
-            X, ensure_min_samples=2, allow_nd=True, accept_sparse=True)
+        X = [check_array(x, accept_sparse=True) for x in X]
 
         self.n_features_ = X[0].shape[1]
 
@@ -115,21 +106,23 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
         # B= U\Sigma
         sigmas, U = self._fit_U_Sigma(B)
 
+        UTU = [u.T.dot(u) for u in U]
+        UTU_inv = [np.linalg.inv(utu) for utu in UTU]
         self.U = U
-        utu = self._mat_inner_prod(U)
-        utu_inv = np.linalg.inv(utu)
-        self.U_ortho = np.dot(U, utu_inv)
+        self.U_ortho = [np.dot(u, utu_inv) for u, utu_inv in zip(U, UTU_inv)]
         self.sigmas = sigmas
+        self.eigen_values = eigen_values
         self.V = V
         return self
 
-    def transform(self, X):
+    def transform(self, X, transform_type='uinv'):
         """ A reference implementation of a transform function.
 
         Parameters
         ----------
         X : {array-like, sparse-matrix}, shape (n_samples, n_features)
             The input samples.
+        transform_type: {univ, ortho}
 
         Returns
         -------
@@ -141,13 +134,16 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
         check_is_fitted(self, 'n_features_')
 
         # Input validation
-        X = check_array(X, allow_nd=True, accept_sparse=True)
+        X = [check_array(x, accept_sparse=True) for x in X]
 
         # Check that the input is of the same shape as the one passed
         # during fit.
         if X[0].shape[1] != self.n_features_:
             raise ValueError('Shape of input is different from what was seen'
                              'in `fit`')
-        transform = self.U_ortho
-        X_transformed = np.vectorize(lambda x, y: x.T.dot(y), signature='(m,n),(m,n)->(n,n)')(X, self.U)
+        if transform_type == 'uinv':
+            projection_mat = self.U_ortho
+        else:
+            projection_mat = self.U
+        X_transformed = [x.T.dot(p) for x, p in zip(X, projection_mat)]
         return X_transformed
