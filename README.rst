@@ -22,7 +22,7 @@ sklhogsvd - Higher order generalized singular value decomposition
 
 .. _scikit-learn: https://scikit-learn.org
 
-**sklhogsvd** is a ``scikit-learn`` compatible package to perform
+**sklhogsvd** is a ``scikit-learn`` compatible python package to perform
 higher order generalized singular value decomposition as described
 in [Ponnapalli2011]_ with an additional support for ensuring
 orthogonality in the "arraylet" space.
