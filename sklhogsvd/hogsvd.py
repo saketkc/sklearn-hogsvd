@@ -2,10 +2,11 @@
 This is a module to perform higher order generalized singular value decomposition.
 """
 import numpy as np
+from scipy.linalg import sqrtm
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
 
-#from numpy.linalg import multi_dot
+# from numpy.linalg import multi_dot
 
 
 class HigherOrderGSVD(BaseEstimator, TransformerMixin):
@@ -109,13 +110,14 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
         UTU = [u.T.dot(u) for u in U]
         UTU_inv = [np.linalg.inv(utu) for utu in UTU]
         self.U = U
-        self.U_ortho = [np.dot(u, utu_inv) for u, utu_inv in zip(U, UTU_inv)]
+        self.U_ortho1 = [np.dot(u, utu_inv) for u, utu_inv in zip(U, UTU_inv)]
+        self.U_ortho2 = [np.dot(u, sqrtm(utu)) for u, utu in zip(U, UTU)]
         self.sigmas = sigmas
         self.eigen_values = eigen_values
         self.V = V
         return self
 
-    def transform(self, X, transform_type='uinv'):
+    def transform(self, X, transform_type="uinv"):
         """ A reference implementation of a transform function.
 
         Parameters
@@ -131,7 +133,7 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
             in ``X``.
         """
         # Check is fit had been called
-        check_is_fitted(self, 'n_features_')
+        check_is_fitted(self, "n_features_")
 
         # Input validation
         X = [check_array(x, accept_sparse=True) for x in X]
@@ -139,11 +141,17 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
         # Check that the input is of the same shape as the one passed
         # during fit.
         if X[0].shape[1] != self.n_features_:
-            raise ValueError('Shape of input is different from what was seen'
-                             'in `fit`')
-        if transform_type == 'uinv':
-            projection_mat = self.U_ortho
-        else:
+            raise ValueError(
+                "Shape of input is different from what was seen" "in `fit`"
+            )
+        if transform_type == "uinv":
             projection_mat = self.U
+        elif transform_type == "ortho1":
+            projection_mat = self.U_ortho1
+        elif transform_type == "ortho2":
+            projection_mat = self.U_ortho2
+        else:
+            raise ValueError("{} not a valid transform_type".format(transform_type))
+
         X_transformed = [x.T.dot(p) for x, p in zip(X, projection_mat)]
         return X_transformed
