@@ -2,11 +2,12 @@
 This is a module to perform higher order generalized singular value decomposition.
 """
 import numpy as np
+from np.linalg import eig
+from np.linalg import inv as invert_matrix
+from np.linalg import norm
 from scipy.linalg import sqrtm
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
-
-# from numpy.linalg import multi_dot
 
 
 class HigherOrderGSVD(BaseEstimator, TransformerMixin):
@@ -40,25 +41,25 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
         N = len(X)
         data_shape = X[0].shape
         A = [x.T.dot(x) for x in X]
-        A_inv = [np.linalg.inv(a) for a in A]
+        A_inv = [invert_matrix(a) for a in A]
         S = np.zeros((data_shape[1], data_shape[1]))
         for i in range(N):
             for j in range(i + 1, N):
-                S = S + (np.dot(A[i], A_inv[j]) + np.dot(A[j], A_inv[i]))
+                S = S + (A[i].dot(A_inv[j]) + A[j].dot(A_inv[i]))
         S = S / (N * (N - 1))
         return S
 
     @staticmethod
     def _fit_B(X, V):
         X = [check_array(x, accept_sparse=True) for x in X]
-        V_inv = np.linalg.inv(V)
-        B = [np.dot(V_inv, x.T).T for x in X]
+        V_inv = invert_matrix(V)
+        B = [V_inv.dot(x.T).T for x in X]
         return B
 
     @staticmethod
     def _eigen_decompostion(X):
         X = check_array(X, accept_sparse=True)
-        eigen_values, V = np.linalg.eig(X)
+        eigen_values, V = eig(X)
         # Ensure they are sorted
         idx = eigen_values.argsort()[::-1]
         eigen_values = eigen_values[idx]
@@ -68,7 +69,7 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
     @staticmethod
     def _fit_U_Sigma(B):
         B = [check_array(b, accept_sparse=True) for b in B]
-        sigmas = np.array([np.linalg.norm(b, axis=0) for b in B])
+        sigmas = np.array([norm(b, axis=0) for b in B])
         U = [b / sigma for b, sigma in zip(B, sigmas)]
         return sigmas, U
 
@@ -108,10 +109,10 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
         sigmas, U = self._fit_U_Sigma(B)
 
         UTU = [u.T.dot(u) for u in U]
-        UTU_inv = [np.linalg.inv(utu) for utu in UTU]
+        UTU_inv = [invert_matrix(utu) for utu in UTU]
         self.U = U
-        self.U_ortho1 = [np.dot(u, utu_inv) for u, utu_inv in zip(U, UTU_inv)]
-        self.U_ortho2 = [np.dot(u, sqrtm(utu)) for u, utu in zip(U, UTU)]
+        self.U_ortho1 = [u.dot(utu_inv) for u, utu_inv in zip(U, UTU_inv)]
+        self.U_ortho2 = [u.dot(invert_matrix(sqrtm(utu))) for u, utu in zip(U, UTU)]
         self.sigmas = sigmas
         self.eigen_values = eigen_values
         self.V = V
