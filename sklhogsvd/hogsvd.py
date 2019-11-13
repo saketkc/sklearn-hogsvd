@@ -2,9 +2,9 @@
 This is a module to perform higher order generalized singular value decomposition.
 """
 import numpy as np
-from np.linalg import eig
-from np.linalg import inv as invert_matrix
-from np.linalg import norm
+from numpy.linalg import eig
+from numpy.linalg import inv as invert_matrix
+from numpy.linalg import norm
 from scipy.linalg import sqrtm
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
@@ -26,9 +26,7 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
     """
 
     def __init__(self):
-        self.U = None
-        self.sigmas = None
-        self.V = None
+      pass
 
     @staticmethod
     def _mat_inner_prod(X):
@@ -87,6 +85,9 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
         self : object
             Returns self.
         """
+        self.U = None
+        self.sigmas = None
+        self.V = None
         X = [check_array(x, accept_sparse=True) for x in X]
 
         self.n_features_ = X[0].shape[1]
@@ -110,9 +111,9 @@ class HigherOrderGSVD(BaseEstimator, TransformerMixin):
 
         UTU = [u.T.dot(u) for u in U]
         UTU_inv = [invert_matrix(utu) for utu in UTU]
-        self.U = U
-        self.U_ortho1 = [u.dot(utu_inv) for u, utu_inv in zip(U, UTU_inv)]
-        self.U_ortho2 = [u.dot(invert_matrix(sqrtm(utu))) for u, utu in zip(U, UTU)]
+        self.U = np.array(U)
+        self.U_ortho1 = np.array([u.dot(utu_inv) for u, utu_inv in zip(U, UTU_inv)])
+        self.U_ortho2 = np.array([u.dot(invert_matrix(sqrtm(utu))) for u, utu in zip(U, UTU)])
         self.sigmas = sigmas
         self.eigen_values = eigen_values
         self.V = V
