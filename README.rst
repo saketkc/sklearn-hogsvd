@@ -5,15 +5,6 @@
 .. |Travis| image:: https://travis-ci.org/saketkc/sklhogsvd.svg?branch=master
 .. _Travis: https://travis-ci.org/saketkc/sklhogsvd
 
-.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/2nddd3o9d70upwxj/branch/master?svg=true
-.. _AppVeyor: https://ci.appveyor.com/project/saketkc/sklhogsvd
-
-.. |Codecov| image:: https://codecov.io/gh/saketkc/sklhogsvd/branch/master/graph/badge.svg
-.. _Codecov: https://codecov.io/gh/saketkc/sklhogsvd
-
-.. |CircleCI| image:: https://circleci.com/gh/saketkc/sklhogsvd.svg?style=shield&circle-token=:circle-token
-.. _CircleCI: https://circleci.com/gh/saketkc/sklhogsvd/tree/master
-
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/sklearn-hogsvd/badge/?version=latest
 .. _ReadTheDocs: https://sklearn-hogsvd.readthedocs.io/en/latest/?badge=latest
 
