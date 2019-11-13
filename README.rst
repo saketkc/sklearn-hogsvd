@@ -1,6 +1,6 @@
 .. -*- mode: rst -*-
 
-|Travis|_ |AppVeyor|_ |Codecov|_ |CircleCI|_ |ReadTheDocs|_
+|Travis|_  |ReadTheDocs|_
 
 .. |Travis| image:: https://travis-ci.org/saketkc/sklhogsvd.svg?branch=master
 .. _Travis: https://travis-ci.org/saketkc/sklhogsvd
