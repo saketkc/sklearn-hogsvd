@@ -2,8 +2,8 @@
 
 |Travis|_  |ReadTheDocs|_
 
-.. |Travis| image:: https://travis-ci.org/saketkc/sklhogsvd.svg?branch=master
-.. _Travis: https://travis-ci.org/saketkc/sklhogsvd
+.. |Travis| image:: https://travis-ci.org/saketkc/sklearn-hogsvd.svg?branch=master
+.. _Travis: https://travis-ci.org/saketkc/sklearn-hogsvd
 
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/sklearn-hogsvd/badge/?version=latest
 .. _ReadTheDocs: https://sklearn-hogsvd.readthedocs.io/en/latest/?badge=latest
