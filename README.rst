@@ -17,7 +17,7 @@ sklhogsvd - Higher order generalized singular value decomposition
 higher order generalized singular value decomposition (HOGSVD) as described
 in [Ponnapalli2011]_ with an additional support for ensuring
 orthogonality in the "arraylet" space. The orthogonalizing trick is summarized
-in the PDF _`here <https://www.dropbox.com/s/bun08vd9bp86jo3/HOGSVD_orthogonalization.pdf>`_.
+in the PDF `here <https://www.dropbox.com/s/bun08vd9bp86jo3/HOGSVD_orthogonalization.pdf>`_.
 
 `Demo notebook  <./notebooks/demo.ipynb>`_.
 
