@@ -19,7 +19,7 @@ in [Ponnapalli2011]_ with an additional support for ensuring
 orthogonality in the "arraylet" space. The orthogonalizing trick is summarized
 in the PDF `here <https://www.dropbox.com/s/bun08vd9bp86jo3/HOGSVD_orthogonalization.pdf>`_.
 A poster demonstrating its utility in finding orthologous genes (based on expression)
-is _`here <https://f1000research.com/posters/7-1853>`_. 
+is `here <https://f1000research.com/posters/7-1853>`_. 
 
 `Demo notebook  <./notebooks/demo.ipynb>`_.
 
