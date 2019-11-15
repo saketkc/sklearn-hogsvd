@@ -16,14 +16,19 @@ sklhogsvd - Higher order generalized singular value decomposition
 **sklhogsvd** is a ``scikit-learn`` compatible python package to perform
 higher order generalized singular value decomposition (HOGSVD) as described
 in [Ponnapalli2011]_ with an additional support for ensuring
-orthogonality in the "arraylet" space. The orthogonalizing trick is summarized
+orthogonality in the "arraylet" space.
+
+
+- The orthogonalization trick is summarized
 in the PDF `here <https://www.dropbox.com/s/bun08vd9bp86jo3/HOGSVD_orthogonalization.pdf>`_.
-A poster demonstrating its utility in finding orthologous genes (based on expression)
+
+- A poster demonstrating its utility in finding orthologous genes (based on expression)
 is `here <https://f1000research.com/posters/7-1853>`_. 
+
+- A work in progress writeup is `here <https://www.dropbox.com/s/zxyxbwdhju09ocr/Higher_Order_Generalized_SVD_based_alignment_free_method_for_inferring_orthologous_genes_across_species.pdf>`_.
 
 `Demo notebook  <./notebooks/demo.ipynb>`_.
 
-A
 
 .. [Ponnapalli2011] Ponnapalli, S.P., Saunders, M.A., Van Loan, C.F., and Alter, O. (2011). A Higher-Order Generalized Singular Value Decomposition for Comparison of Global mRNA Expression from Multiple Organisms. PLoS ONE 6, e28072. https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0028072
 
