@@ -19,11 +19,9 @@ in [Ponnapalli2011]_ with an additional support for ensuring
 orthogonality in the "arraylet" space.
 
 
-- The orthogonalization trick is summarized
-in the PDF `here <https://www.dropbox.com/s/bun08vd9bp86jo3/HOGSVD_orthogonalization.pdf>`_.
+- The orthogonalization trick is summarized in the PDF `here <https://www.dropbox.com/s/bun08vd9bp86jo3/HOGSVD_orthogonalization.pdf>`_.
 
-- A poster demonstrating its utility in finding orthologous genes (based on expression)
-is `here <https://f1000research.com/posters/7-1853>`_. 
+- A poster demonstrating its utility in finding orthologous genes (based on expression) is `here <https://f1000research.com/posters/7-1853>`_. 
 
 - A work in progress writeup is `here <https://www.dropbox.com/s/zxyxbwdhju09ocr/Higher_Order_Generalized_SVD_based_alignment_free_method_for_inferring_orthologous_genes_across_species.pdf>`_.
 
